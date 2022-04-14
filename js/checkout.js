@@ -11,4 +11,16 @@ var errorPhone = document.getElementById('errorPhone');
 // Exercise 6
 function validate() {
     // Validate fields entered by the user: name, phone, password, and email
+    let fName = document.getElementById("fName");
+    let lName = document.getElementById("fLastN");
+    let email = document.getElementById("fEmail");
+    let password = document.getElementById("fPassword");
+    let address = document.getElementById("fAddress");
+    let pNumber = document.getElementById("fPhone");
+    
+
+    if (fName == "") {
+        document.getElementsByClassName("invalid-feedback").display = 'block';
+
+    }
 }
