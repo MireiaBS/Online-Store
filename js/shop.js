@@ -92,7 +92,7 @@ function buy(id) {
         if (productoId == products[i].id) {
            cartList.push(products[i]);                     
         }
-    }
+    } generateCart(cartList);
 }
 
 function cleanCart() {
@@ -132,7 +132,7 @@ function generateCart(cartList) {
                 cart.push(cartList[i]);
             }          
         }   
-    }
+    } 
 }
 
 function applyPromotionsCart() {
@@ -152,7 +152,6 @@ function applyPromotionsCart() {
     }
 }
 
-
 // ** Nivell II **
 
 // Exercise 7
@@ -162,10 +161,19 @@ function addToCart(id) {
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
 }
 
-// Exercise 8
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
+    
+    let i;
+    let productToRemove = id;
+
+    for ( i = 0; i < cartList.length; i++) {
+        if ( productToRemove == cartList[i].id) {
+            cartList[i].quantity--;   
+            if ( cartList[i].quantity == 0) {
+                cartList[i].slice(1,0);
+            }              
+        }   
+    } console.log(cartList);
 }
 
 // Exercise 9
@@ -179,6 +187,6 @@ function open_modal(){
     generateCart(cartList);
     calculateTotal();  
     applyPromotionsCart(); 
-    console.log(cart);
+    console.log(cartList);
 
 }
