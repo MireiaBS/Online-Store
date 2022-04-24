@@ -1,6 +1,5 @@
-// If you have time, you can move this variable "products" to a json file and load the data in this js. It will look more professional
 var products = [
-   {
+    {
         id: 1,
         name: 'cooking oil',
         price: 10.5,
@@ -11,7 +10,7 @@ var products = [
             percent: 20
         },
         subtotal: 10.5,
-        subtotalWithDiscount: 10.5
+        subtotalWithDiscount: 0
     },
     {
         id: 2,
@@ -19,7 +18,7 @@ var products = [
         price: 6.25,
         quantity: 1,
         type: 'grocery'
-        
+
     },
     {
         id: 3,
@@ -32,7 +31,7 @@ var products = [
             percent: 30
         },
         subtotal: 5,
-        subtotalWithDiscount: 5
+        subtotalWithDiscount: 0
     },
     {
         id: 4,
@@ -77,103 +76,125 @@ var products = [
         type: 'clothes'
     }
 ]
-// Array with products (objects) added directly with push(). Products in this array are repeated.
 var cartList = [];
 
-// Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
 
 var total = 0;
 
-function buy(id) { 
+/* function buy(id) {
     let i;
     let productoId = id;
     for (i = 0; i < products.length; i++) {
         if (productoId == products[i].id) {
-           cartList.push(products[i]);                     
+            cartList.push(products[i]);
         }
-    } generateCart(cartList);
-}
+    } 
+    generateCart(cartList);       
+} */
 
-function cleanCart() {
-    while (cartList.length > 0) {
-        cartList.pop();
-        console.log(cartList);
-    }
-}
 
-function calculateTotal() {
-    let i;
-    let totalPrice = 0;
-    for (i = 0; i < cartList.length; i++){
-        totalPrice += cartList[i].price;         
-    }    
-}
+/*function generateCart(cartList) {
 
-function generateCart(cartList) {
-   
     let i;
     let k;
     let existe;
 
-    for ( i = 0; i < cartList.length; i++) {
-        if ( cart.length == 0) {
+    for (i = 0; i < cartList.length; i++) {        
+        if (cart.length == 0) {
             cart.push(cartList[i]);
         } else {
             existe = false;
-            for ( k = 0; k < cart.length; k++) { 
-                if ( cartList[i].id == cart[k].id) {
+            for (k = 0; k < cart.length; k++) {                
+                if (cartList[i].id == cart[k].id) {                    
                     cart[k].quantity++;
                     existe = true;
-                }                                   
-            }  
-            if ( existe == false) {
-                
+                }
+            }
+            if (existe == false) {
                 cart.push(cartList[i]);
-            }          
-        }   
+            }
+        }
     } 
-}
+    calculateTotal(cart);
+    console.log(cart);
+}*/
 
-function applyPromotionsCart() {
-    
-    for ( let i = 0; i < cart.length; i++) {
-        if ( cart[i].hasOwnProperty("quantity") ) {
-            if ( cart[i].quantity == cart[i].offer.number) {
-                if ( cart[i].id == 1) {
-                    cart[i].subtotal = cart[i].price * cart[i].quantity;                    
-                    cart[i].subtotalWithDiscount = 10 * cart[i].quantity;
-                } else if ( cart[i].id == 3) {
-                    cart[i].subtotal = cart[i].price * cart[i].quantity;                    
-                    cart[i].subtotalWithDiscount = (cart[i].price * 2 / 3).toFixed(3) * cart[i].quantity;
+function addToCart(id) {
+
+    let addProductPosition;
+    let productoId = id;
+    let cartProductPosition;
+    let existe;
+
+    for (addProductPosition = 0; addProductPosition < products.length; addProductPosition++) {
+        if (productoId == products[addProductPosition].id) {
+            if (cart.length == 0) {
+                cart.push(products[addProductPosition]);
+            } else {
+                existe = false;
+                for (cartProductPosition = 0; cartProductPosition < cart.length; cartProductPosition++) {
+                    if (cart[cartProductPosition].id == products[addProductPosition].id) {
+                        cart[cartProductPosition].quantity++;
+                        existe = true;
+                    }
+                }
+                if (existe == false) {
+                    cart.push(products[addProductPosition]);
                 }
             }
         }
     }
+    calculateTotal(cart);
+    console.log(cart);
 }
 
-// ** Nivell II **
-
-// Exercise 7
-function addToCart(id) {
-    // Refactor previous code in order to simplify it 
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+function cleanCart() {
+    while (cart.length > 0) {
+        cart.pop();
+        console.log(cart);
+    }
 }
+
+function calculateTotal(cart) {
+    let i;
+    for (i = 0; i < cart.length; i++) {
+        cart[i].subtotal = cart[i].price * cart[i].quantity;
+        if (cart[i].hasOwnProperty("quantity")) {
+            applyPromotionsCart(i);
+        }
+    }
+}
+
+
+function applyPromotionsCart(i) {
+
+    if (cart[i].id == 1 && cart[i].quantity >= products[0].offer.number) {
+        cart[i].subtotal = cart[i].price * cart[i].quantity;
+        cart[i].subtotalWithDiscount = cart[i].subtotal - (20 * (cart[i].price * cart[i].quantity)) / 100;
+    } else if (cart[i].id == 3 && cart[i].quantity >= products[2].offer.number) {
+        cart[i].subtotal = cart[i].price * cart[i].quantity;
+        cart[i].subtotalWithDiscount = (cart[i].price * 2 / 3).toFixed(3) * cart[i].quantity;
+    } else {
+        cart[i].subtotalWithDiscount = "No Discount";
+    }
+}
+
 
 function removeFromCart(id) {
-    
+
     let i;
     let productToRemove = id;
 
-    for ( i = 0; i < cartList.length; i++) {
-        if ( productToRemove == cartList[i].id) {
-            cartList[i].quantity--;   
-            if ( cartList[i].quantity == 0) {
-                cartList[i].slice(1,0);
-            }              
-        }   
-    } console.log(cartList);
+    for (i = 0; i < cart.length; i++) {
+        if (productToRemove == cart[i].id) {
+            cart[i].quantity--;
+            if (cart[i].quantity == 0) {
+                cart.splice([i], 1);
+            }
+            i = cart.length;
+        } calculateTotal(cart);
+    } console.log(cart);
 }
 
 // Exercise 9
@@ -182,11 +203,6 @@ function printCart() {
 }
 
 
-function open_modal(){
-	console.log("Open Modal");
-    generateCart(cartList);
-    calculateTotal();  
-    applyPromotionsCart(); 
-    console.log(cartList);
-
+function open_modal() {
+    console.log("Open Modal");
 }
