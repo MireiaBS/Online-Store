@@ -166,7 +166,6 @@ function calculateTotal(cart) {
     }
 }
 
-
 function applyPromotionsCart(i) {
 
     if (cart[i].id == 1 && cart[i].quantity >= products[0].offer.number) {
@@ -179,7 +178,6 @@ function applyPromotionsCart(i) {
         cart[i].subtotalWithDiscount = "No Discount";
     }
 }
-
 
 function removeFromCart(id) {
 
