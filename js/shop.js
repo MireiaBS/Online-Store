@@ -1,86 +1,8 @@
-var products = [
-    {
-        id: 1,
-        name: 'cooking oil',
-        price: 10.5,
-        type: 'grocery',
-        quantity: 1,
-        offer: {
-            number: 3,
-            percent: 20
-        },
-        subtotal: 10.5,
-        subtotalWithDiscount: 0
-    },
-    {
-        id: 2,
-        name: 'Pasta',
-        price: 6.25,
-        quantity: 1,
-        type: 'grocery'
 
-    },
-    {
-        id: 3,
-        name: 'Instant cupcake mixture',
-        price: 5,
-        type: 'grocery',
-        quantity: 1,
-        offer: {
-            number: 10,
-            percent: 30
-        },
-        subtotal: 5,
-        subtotalWithDiscount: 0
-    },
-    {
-        id: 4,
-        name: 'All-in-one',
-        price: 260,
-        quantity: 1,
-        type: 'beauty'
-    },
-    {
-        id: 5,
-        name: 'Zero Make-up Kit',
-        price: 20.5,
-        quantity: 1,
-        type: 'beauty'
-    },
-    {
-        id: 6,
-        name: 'Lip Tints',
-        price: 12.75,
-        quantity: 1,
-        type: 'beauty'
-    },
-    {
-        id: 7,
-        name: 'Lawn Dress',
-        price: 15,
-        quantity: 1,
-        type: 'clothes'
-    },
-    {
-        id: 8,
-        name: 'Lawn-Chiffon Combo',
-        price: 19.99,
-        quantity: 1,
-        type: 'clothes'
-    },
-    {
-        id: 9,
-        name: 'Toddler Frock',
-        price: 9.99,
-        quantity: 1,
-        type: 'clothes'
-    }
-]
 var cartList = [];
-
 var cart = [];
-
 var total = 0;
+let contador = 0;
 
 /* function buy(id) {
     let i;
@@ -126,7 +48,7 @@ function addToCart(id) {
     let productoId = id;
     let cartProductPosition;
     let existe;
-
+    contador += 1;
     for (addProductPosition = 0; addProductPosition < products.length; addProductPosition++) {
         if (productoId == products[addProductPosition].id) {
             if (cart.length == 0) {
@@ -145,14 +67,15 @@ function addToCart(id) {
             }
         }
     }
+    document.getElementById("count_product").innerHTML = contador;
     calculateTotal(cart);
     console.log(cart);
 }
 
 function cleanCart() {
-    
+
     while (cart.length > 0) {
-        cart.pop();        
+        cart.pop();
         console.log(cart);
     }
     printCart(clean);
@@ -185,6 +108,7 @@ function removeFromCart(id) {
 
     let i;
     let productToRemove = id;
+    contador -= 1;
 
     for (i = 0; i < cart.length; i++) {
         if (productToRemove == cart[i].id) {
@@ -195,33 +119,32 @@ function removeFromCart(id) {
             i = cart.length;
         } calculateTotal(cart);
     } console.log(cart);
+    document.getElementById("count_product").innerHTML = contador;
 }
 
-// Exercise 9
+
 function printCart(clean) {
 
     let text = "";
     let i;
     let totalCart = 0;
 
-    for (i = 0; i < cart.length; i++){  
-        text += "<li> <b>Product: </b>" + cart[i].name +  "<br>" +
-                " <b>Price: </b>" + cart[i].price + "<br>" +
-                " <b>Quantity: </b>" +cart[i].quantity + "<br>" +
-                " <b>Total: </b>" +cart[i].subtotal + "<br>" +
-                " <b>Total with discount: </b>" + cart[i].subtotalWithDiscount +"</li>";
-        totalCart += cart[i].subtotal 
-            if (cart[i].subtotalWithDiscount) {
-                totalCart = totalCart - cart[i].subtotal + cart[i].subtotalWithDiscount;
-            }
-
+    for (i = 0; i < cart.length; i++) {
+        text += "<li> <b>Product: </b>" + cart[i].name + "<br>" +
+            " <b>Price: </b>" + cart[i].price + "<br>" +
+            " <b>Quantity: </b>" + cart[i].quantity + "<br>" +
+            " <b>Total: </b>" + cart[i].subtotal + "<br>" +
+            " <b>Total with discount: </b>" + cart[i].subtotalWithDiscount + "</li>";
+        totalCart += cart[i].subtotal
+        if (cart[i].subtotalWithDiscount) {
+            totalCart = totalCart - cart[i].subtotal + cart[i].subtotalWithDiscount;
+        }
         document.getElementById("list").innerHTML = text + "<br> <b>Total: </b>" + totalCart.toFixed(2);
     }
     if (clean) {
         document.getElementById("list").innerHTML = "Cart cleaned!";
     }
 }
-
 
 function open_modal() {
     console.log("Open Modal");
