@@ -30,6 +30,6 @@ Adding and removing classes that we have predefined, or using those that Bootstr
 Last but not least, a simple layout to make the website more attractive and eye-catching, although we also try to make it as easy to use as possible.
 It is important to know that the client is adapting the page, to understand their needs and adapt the website to them.
 
-![Preview](/images_html/img3.jpg)
+![Preview](/images_html/img4.jpg)
 
 Mireia Barrufet Soler

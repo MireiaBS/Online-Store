@@ -129,6 +129,10 @@ function printCart(clean) {
     let i;
     let totalCart = 0;
 
+    if (cart.length > 0) {
+        document.getElementById("select_something").innerText = "";
+    } 
+
     for (i = 0; i < cart.length; i++) {
         text += "<li> <b>Product: </b>" + cart[i].name + "<br>" +
             " <b>Price: </b>" + cart[i].price + "<br>" +
@@ -142,6 +146,8 @@ function printCart(clean) {
         document.getElementById("list").innerHTML = text + "<br> <b>Total: </b>" + totalCart.toFixed(2);
     }
     if (clean) {
+        contador = 0;
+        document.getElementById("count_product").innerHTML = contador;
         document.getElementById("list").innerHTML = "Cart cleaned!";
     }
 }
