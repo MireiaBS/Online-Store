@@ -1,6 +1,6 @@
 # Online Store  
 
-### *Using JavaScript, CSS3, Bootstrap5 and SASS*
+### *Using JavaScript, CSS3 and Bootstrap5*
 
 
 In this small project I put into practice the basics of **JavaScript**.
